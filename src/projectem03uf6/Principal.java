@@ -125,10 +125,15 @@ public class Principal {
                     case 1:
                         //
                         crearPersonatge(persona1);
+                        //llenamos info
+                        //hacemos insert del objeto creado en BD
+                        //añadimos al arraylist
+                        
                         break;
                     case 2:
                         //Falta Implementar
                         modificarPersonatge();
+                        
                         break;
                     case 3:
                         //Falta Implementar
@@ -185,17 +190,41 @@ public class Principal {
     public static void modificarPersonatge(){
         Scanner entrada = new Scanner(System.in);
 
-        System.out.println("Nom Personatge que volem modificar:");
+        for(int z=0;z<totalPersonatges.size();z++){
+            
+            System.out.println(totalPersonatges.get(z).getIdPersonatge()+"-"+totalPersonatges.get(z));
+        }
+        System.out.println("NUm Personatge que volem modificar:");
+        int numPersonatge = entrada.nextInt();//campo por el que filtrar
+       
+        System.out.println("Nom Personatge:");
         String nomPersonatge = entrada.next();
 
+        System.out.println("Pot Atac:");
+        int ptAtac = entrada.nextInt();
+        
+        System.out.println("Pot Def:");
+        int ptDef = entrada.nextInt();
+        
+        System.out.println("Clan:");
+        String clan = entrada.next();
+        
+        System.out.println("Element:");
+        String element = entrada.next();
+        //update ... values ... where idPersonaje = numPersonatge
+        //vaciar el arraylist i hacer un select y volver-lo a llenar
         System.out.println("Falta Implementar");
     }
     
     public static void eliminarPersonatge(){
         Scanner entrada = new Scanner(System.in);
-
-        System.out.println("Nom Personatge que volem eliminar:");
-        String nomPersonatge = entrada.next();
+         for(int z=0;z<totalPersonatges.size();z++){
+            
+            System.out.println(totalPersonatges.get(z).getIdPersonatge()+"-"+totalPersonatges.get(z));
+        }
+        System.out.println("Num Personatge que volem modificar:");
+        int numPersonatge = entrada.nextInt();//delete from persontages where idperdonatge=numPersonatge
+        //vaciar el arraylist i hacer un select y volver-lo a llenar
 
         System.out.println("Falta Implementar");
     }
