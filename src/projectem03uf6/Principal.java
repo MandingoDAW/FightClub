@@ -27,6 +27,7 @@ public class Principal {
     private static String passU;//password que recuperamos de la BD
     private static String lema ;//lema que recuperamos de la BD
     private static int log = 0 ;
+    private static ArrayList <Personatge> totalPersonatges  = new ArrayList<Personatge>();
     
     public static void main(String[] args) throws SQLException {
         Scanner entrada = new Scanner(System.in);
@@ -115,16 +116,20 @@ public class Principal {
                 opcio = entrada.nextInt();
                 switch (opcio) {
                     case 1:
-                        //Falta Implementar
+                        //
+                        crearPersonatge();
                         break;
                     case 2:
                         //Falta Implementar
+                        modificarPersonatge();
                         break;
                     case 3:
                         //Falta Implementar
+                        eliminarPersonatge();
                         break;
                     case 4:
                         //Falta Implementar
+                        crearEquip();
                         break;
                     case 5:
                         //en aquesta opcio es tindra que realitzar una eleccio entre dos personatges P1 vs CPU
@@ -146,6 +151,64 @@ public class Principal {
         } while (opcio != 7);
 
     }
+    
+    public static void crearPersonatge(){
+        Scanner entrada = new Scanner(System.in);
+
+        System.out.println("Nom Personatge:");
+        String nomPersonatge = entrada.next();
+
+        System.out.println("Pot Atac:");
+        int ptAtac = entrada.nextInt();
+        
+        System.out.println("Pot Def:");
+        int ptDef = entrada.nextInt();
+        
+        System.out.println("Clan:");
+        String clan = entrada.next();
+        
+        System.out.println("Element:");
+        String element = entrada.next();
+     
+        Personatge personatge = new Personatge(nomPersonatge,ptAtac,ptDef,clan,element);
+        totalPersonatges.add(personatge);
+        System.out.println(totalPersonatges.get(totalPersonatges.size()-1));
+    }
+    
+    public static void modificarPersonatge(){
+        Scanner entrada = new Scanner(System.in);
+
+        System.out.println("Nom Personatge que volem modificar:");
+        String nomPersonatge = entrada.next();
+
+        System.out.println("Falta Implementar");
+    }
+    
+    public static void eliminarPersonatge(){
+        Scanner entrada = new Scanner(System.in);
+
+        System.out.println("Nom Personatge que volem eliminar:");
+        String nomPersonatge = entrada.next();
+
+        System.out.println("Falta Implementar");
+    }
+    
+     public static void crearEquip(){
+        Scanner entrada = new Scanner(System.in);
+        for(int z=0;z<totalPersonatges.size();z++){
+            
+            System.out.println(z+"-"+totalPersonatges.get(z));
+        }
+        for(int i=0;i<3;i++){
+            System.out.println("Numero:");
+            String nomPersonatge = entrada.next();
+        }
+        System.out.println("Falta Implementar");
+    }
+    
+    
+    
+    
     
     public static void combatIndividual(Jugador persona1,Personatge personatge1,Personatge personatge2 ){
         System.out.println("----------------------------------------------------");
