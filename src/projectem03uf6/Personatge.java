@@ -23,7 +23,7 @@ public class Personatge {
     private int valorEntero;
     private Jugador propietari;
 
-    public Personatge(String Nom, int potAtac, int potDef, String Raça, String Medi) {
+    public Personatge(String Nom, int potAtac, int potDef, String Raça, String Medi,Jugador propietari) {
         this.Nom = Nom;
         this.potAtac = potAtac;
         this.potDef = potDef;
@@ -45,6 +45,14 @@ public class Personatge {
 
     public void setIdPersonatge(int idPersonatge) {
         this.idPersonatge = idPersonatge;
+    }
+
+    public Jugador getPropietari() {
+        return propietari;
+    }
+
+    public void setPropietari(Jugador propietari) {
+        this.propietari = propietari;
     }
     
     

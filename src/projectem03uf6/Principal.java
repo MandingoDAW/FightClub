@@ -93,12 +93,12 @@ public class Principal {
         System.out.println(persona1);
         //Aquest personatges es tindran que afegir dinamicament guardar mitjançant JPA2 i recuperar-los al iniciar la app
         
-        Personatge personatge1 = new Personatge("Madara",10,10,"Uchiha","Foc");
-        Personatge personatge2 = new Personatge("Sakura",4,8,"Uchiha","Viento");
-        Personatge personatge3 = new Personatge("Obito",5,9,"Uchiha","Foc");
-        Personatge personatge4 = new Personatge("Jiraya",7,7,"Sabio","Viento");
-        Personatge personatge5 = new Personatge("Naruto",9,9,"Uzumaki","Viento");
-        Personatge personatge6 = new Personatge("Shikamaru",6,2,"Shika","Tierra");
+        Personatge personatge1 = new Personatge("Madara",10,10,"Uchiha","Foc",persona1);
+        Personatge personatge2 = new Personatge("Sakura",4,8,"Uchiha","Viento",persona1);
+        Personatge personatge3 = new Personatge("Obito",5,9,"Uchiha","Foc",persona1);
+        Personatge personatge4 = new Personatge("Jiraya",7,7,"Sabio","Viento",persona1);
+        Personatge personatge5 = new Personatge("Naruto",9,9,"Uzumaki","Viento",persona1);
+        Personatge personatge6 = new Personatge("Shikamaru",6,2,"Shika","Tierra",persona1);
        //Menu de la aplicacio
         totalPersonatges.add(personatge1);
         totalPersonatges.add(personatge2);
@@ -124,7 +124,7 @@ public class Principal {
                 switch (opcio) {
                     case 1:
                         //
-                        crearPersonatge();
+                        crearPersonatge(persona1);
                         break;
                     case 2:
                         //Falta Implementar
@@ -159,7 +159,7 @@ public class Principal {
 
     }
     
-    public static void crearPersonatge(){
+    public static void crearPersonatge(Jugador persona1){
         Scanner entrada = new Scanner(System.in);
 
         System.out.println("Nom Personatge:");
@@ -177,7 +177,7 @@ public class Principal {
         System.out.println("Element:");
         String element = entrada.next();
      
-        Personatge personatge = new Personatge(nomPersonatge,ptAtac,ptDef,clan,element);
+        Personatge personatge = new Personatge(nomPersonatge,ptAtac,ptDef,clan,element,persona1);
         totalPersonatges.add(personatge);
         System.out.println(totalPersonatges.get(totalPersonatges.size()-1));
     }
