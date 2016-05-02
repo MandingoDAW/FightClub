@@ -28,6 +28,7 @@ public class Principal {
     private static String lema ;//lema que recuperamos de la BD
     private static int log = 0 ;
     private static ArrayList <Personatge> totalPersonatges  = new ArrayList<Personatge>();
+    private static ArrayList <Equip> totalEquips  = new ArrayList<Equip>();
     
     public static void main(String[] args) throws SQLException {
         Scanner entrada = new Scanner(System.in);
@@ -98,7 +99,13 @@ public class Principal {
         Personatge personatge4 = new Personatge("Jiraya",7,7,"Sabio","Viento");
         Personatge personatge5 = new Personatge("Naruto",9,9,"Uzumaki","Viento");
         Personatge personatge6 = new Personatge("Shikamaru",6,2,"Shika","Tierra");
-       //Menu de la aplicacio  
+       //Menu de la aplicacio
+        totalPersonatges.add(personatge1);
+        totalPersonatges.add(personatge2);
+        totalPersonatges.add(personatge3);
+        totalPersonatges.add(personatge4);
+        totalPersonatges.add(personatge5);
+        totalPersonatges.add(personatge6);
         int opcio;
         Scanner entrada = new Scanner(System.in);
 
@@ -133,7 +140,7 @@ public class Principal {
                         break;
                     case 5:
                         //en aquesta opcio es tindra que realitzar una eleccio entre dos personatges P1 vs CPU
-                        combatIndividual(persona1,personatge1,personatge2);
+                        combatIndividual(persona1);
                         break;
                     case 6:
                         //en aquest cas li tindrem que pasar les dos arraylist de equips
@@ -194,53 +201,80 @@ public class Principal {
     }
     
      public static void crearEquip(){
+         ArrayList <Personatge> jugEquip  = new ArrayList<Personatge>();
         Scanner entrada = new Scanner(System.in);
+        
         for(int z=0;z<totalPersonatges.size();z++){
             
             System.out.println(z+"-"+totalPersonatges.get(z));
         }
         for(int i=0;i<3;i++){
             System.out.println("Numero:");
-            String nomPersonatge = entrada.next();
+            int numPersonatge = entrada.nextInt();
+            jugEquip.add(totalPersonatges.get(numPersonatge));
         }
-        System.out.println("Falta Implementar");
+        Equip equip1 = new Equip(jugEquip);
+        totalEquips.add(equip1);
+        //System.out.println("Falta Implementar");
+        
     }
     
     
     
     
     
-    public static void combatIndividual(Jugador persona1,Personatge personatge1,Personatge personatge2 ){
+    public static void combatIndividual(Jugador persona1){
+        Scanner entrada = new Scanner(System.in);
+        for(int z=0;z<totalPersonatges.size();z++){
+            
+            System.out.println(z+"-"+totalPersonatges.get(z));
+        }
+        System.out.println("Personatge P1:");
+            int numPersonatge = entrada.nextInt();
+        System.out.println("Personatge CPU:");
+            int numCpu = entrada.nextInt();
+        
         System.out.println("----------------------------------------------------");
         System.out.println("Informació del Personatges");
-        System.out.println(personatge1);
-        System.out.println(personatge2);
-        CombatIndividual combat1 = new CombatIndividual(persona1,personatge1,personatge2);
+        System.out.println(totalPersonatges.get(numPersonatge));
+        System.out.println("VS");
+        System.out.println(totalPersonatges.get(numCpu));
+        CombatIndividual combat1 = new CombatIndividual(persona1,totalPersonatges.get(numPersonatge),totalPersonatges.get(numCpu));
         System.out.println(combat1);
         combat1.Resolucio();
     
     }
     
     public static void combatEquip(Jugador persona1,Personatge personatge1,Personatge personatge2,Personatge personatge3,Personatge personatge4,Personatge personatge5,Personatge personatge6){
-       ArrayList <Personatge> pp  = new ArrayList<Personatge>();
+       Scanner entrada = new Scanner(System.in);
+        for(int z=0;z<totalEquips.size();z++){
+            
+            System.out.println(z+"-"+totalEquips.get(z));
+        }
+        System.out.println("Equip P1:");
+            int numEquipPersonatge = entrada.nextInt();
+        System.out.println("Equip CPU:");
+            int numEquipCpu = entrada.nextInt();
+        
+        /*
+        ArrayList <Personatge> pp  = new ArrayList<Personatge>();
        ArrayList <Personatge> pr  = new ArrayList<Personatge>();
        pp.add(personatge1);
        pp.add(personatge2);
        pp.add(personatge3);
        pr.add(personatge4);
        pr.add(personatge5);
-       pr.add(personatge6);
+       pr.add(personatge6);*/
        System.out.println("----------------------------------------------------");
        System.out.println("Informació del Personatges");
         System.out.println("Equip 1");
-       System.out.println(personatge1);
-       System.out.println(personatge2);
-       System.out.println(personatge3);
+       System.out.println(totalEquips.get(numEquipPersonatge).getPersonatges());
+     
        System.out.println("Equip 2");
-       System.out.println(personatge4);
-       System.out.println(personatge5);
-       System.out.println(personatge6);
-       CombatEquip combat2 = new CombatEquip(persona1,pp,pr);
+       System.out.println(totalEquips.get(numEquipCpu).getPersonatges());
+       
+       
+       CombatEquip combat2 = new CombatEquip(persona1,totalEquips.get(numEquipPersonatge).getPersonatges(),totalEquips.get(numEquipCpu).getPersonatges());
     
     }
 }

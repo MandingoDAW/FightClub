@@ -19,6 +19,8 @@ public class CombatEquip extends Combat {
     int valorEntero;
     private String Terreny; 
     private int potencial;
+    private int RecompteG;
+    private int RecompteP;
 
     public CombatEquip(Jugador P1, ArrayList<Personatge> Participant, ArrayList<Personatge> CPU) {
         this.P1 = P1;
@@ -89,6 +91,7 @@ public class CombatEquip extends Combat {
             if(Participant.get(i).getPotDef()>CPU.get(i).getPotAtac()){
             //Guanya el participant 1
                 //d2=1;
+                RecompteG++;
                 System.out.println("Guanya el Jugador: "+Participant.get(i).getNom());
             }else if(Participant.get(i).getPotDef()<CPU.get(i).getPotAtac()){
             //Empat 0
@@ -97,6 +100,7 @@ public class CombatEquip extends Combat {
             }else{
             //Guanya particiapnt
                 //d2=1;
+                RecompteG++;
                 System.out.println("Guanya el Jugador: "+Participant.get(i).getNom());
             }
         }
@@ -105,13 +109,14 @@ public class CombatEquip extends Combat {
             //d1=0;
             if(Participant.get(i).getPotDef()<CPU.get(i).getPotAtac()){
                 //Guanya CPU -1
-                
+                RecompteP++;
                 System.out.println("Guanya el personatge: "+CPU.get(i).getNom());
             }else if(Participant.get(i).getPotDef()>CPU.get(i).getPotAtac()){
                 //empat 0
                 System.out.println("Empat entre:"+CPU.get(i).getNom()+" i "+Participant.get(i).getNom());
             }else{
                 //Guanya CPU -1
+                RecompteP++;
                 System.out.println("Guanya el Jugador: "+CPU.get(i).getNom());
             }
         }
@@ -120,6 +125,11 @@ public class CombatEquip extends Combat {
         
         }
         System.out.println("----------------------------------------------------------------");
+        if(RecompteG>=2){
+           System.out.println("Guanya el P1");  
+        }else{
+            System.out.println("Guanya el CPU");    
+        }
     }
     
     
