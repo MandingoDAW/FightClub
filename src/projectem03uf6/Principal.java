@@ -27,6 +27,7 @@ public class Principal {
     private static String passU;//password que recuperamos de la BD
     private static String lema ;//lema que recuperamos de la BD
     private static int log = 0 ;
+    private static int admin ;
     private static ArrayList <Personatge> totalPersonatges  = new ArrayList<Personatge>();
     private static ArrayList <Equip> totalEquips  = new ArrayList<Equip>();
     
@@ -46,7 +47,7 @@ public class Principal {
            // while(log==0){
                 conn = bd.obtenirConnexio();
 
-                String consultaSQL = "SELECT count(nom)as log,nom, password , lema FROM Users WHERE nom = ? and password = ?";
+                String consultaSQL = "SELECT count(nom)as log,nom, password , lema,admin FROM Users WHERE nom = ? and password = ?";
                 try (PreparedStatement pstmt = conn.prepareStatement(consultaSQL,PreparedStatement.RETURN_GENERATED_KEYS)) {
                     pstmt.setString(1, nom);
                     pstmt.setString(2, pass);
@@ -59,9 +60,15 @@ public class Principal {
                             nomU=resultat.getString(2);
                             passU=resultat.getString(3);
                             lema=resultat.getString(4);
-                            System.out.println(resultat.getInt(1));
+                            admin=resultat.getInt(5);
+                            System.out.println(resultat.getInt(5));
                             System.out.println("Usari logejat ");
-                            aplicacio();
+                            if(admin==0){
+                                aplicacio();
+                            }else{
+                            //otra funcion
+                                admin();
+                            }
                         }else{
                             System.out.println("Error al log");
                         }
@@ -85,27 +92,90 @@ public class Principal {
        
         
         //combat2.Resolucio();
-        
-    public static void aplicacio(){
+   
+    public static void admin(){
+        System.out.println("Informació del Admin");
+        Jugador persona1 = new Jugador(nomU,passU,lema);
+        System.out.println(persona1);
+        int opcio;
+        Scanner entrada = new Scanner(System.in);
+
+        do {
+
+            System.out.println("\nTrii quina operació vol realitzar:");
+            System.out.println("1.Crear Usuari");
+            System.out.println("2. Editar usuari");
+            System.out.println("3. LListar Usuari");          
+            System.out.println("4. Sortir");
+
+                opcio = entrada.nextInt();
+                switch (opcio) {
+                    case 1:
+                        //
+                       // crearPersonatge(persona1);
+                        //llenamos info
+                        //hacemos insert del objeto creado en BD
+                        //añadimos al arraylist
+                        
+                        break;
+                    case 2:
+                        //Falta Implementar
+                       // modificarPersonatge(persona1);
+                        
+                        break;
+                    case 3:
+                        //Falta Implementar
+                        //eliminarPersonatge();
+                        break;
+                    case 4:
+                        //Falta Implementar
+                        //crearEquip();
+                        break;
+                    case 5:
+                        //en aquesta opcio es tindra que realitzar una eleccio entre dos personatges P1 vs CPU
+                        combatIndividual(persona1);
+                        break;
+                    case 6:
+                        //en aquest cas li tindrem que pasar les dos arraylist de equips
+                        //combatEquip(persona1,personatge1,personatge2,personatge3,personatge4,personatge5,personatge6);
+                        break;
+                    case 7:
+                        System.out.println("Sortint de l'aplicació...");
+                        //conn.close();
+                        System.out.println("Final aplicació");
+                        break;
+                    default:
+                        System.out.println("Opció incorrecta.\n");
+                    break;
+                }
+        } while (opcio != 4);
+    
+    }
+    
+    
+    public static void aplicacio() throws SQLException{
   
         System.out.println("Informació del Jugador");
         Jugador persona1 = new Jugador(nomU,passU,lema);
         System.out.println(persona1);
         //Aquest personatges es tindran que afegir dinamicament guardar mitjançant JPA2 i recuperar-los al iniciar la app
-        
-        Personatge personatge1 = new Personatge("Madara",10,10,"Uchiha","Foc",persona1);
-        Personatge personatge2 = new Personatge("Sakura",4,8,"Uchiha","Viento",persona1);
-        Personatge personatge3 = new Personatge("Obito",5,9,"Uchiha","Foc",persona1);
-        Personatge personatge4 = new Personatge("Jiraya",7,7,"Sabio","Viento",persona1);
-        Personatge personatge5 = new Personatge("Naruto",9,9,"Uzumaki","Viento",persona1);
-        Personatge personatge6 = new Personatge("Shikamaru",6,2,"Shika","Tierra",persona1);
+        PersonatgeDAO p =new PersonatgeDAO();
+         EquipDAO e =new EquipDAO();
+        totalPersonatges=p.llistarPersonatge(persona1.getNomUsuari());
+        totalEquips=e.llistarEquip(persona1.getNomUsuari(), totalPersonatges);
+        /*Personatge personatge1 = new Personatge("Madara",10,10,"Uchiha","Foc",persona1.getNomUsuari());
+        Personatge personatge2 = new Personatge("Sakura",4,8,"Uchiha","Viento",persona1.getNomUsuari());
+        Personatge personatge3 = new Personatge("Obito",5,9,"Uchiha","Foc",persona1.getNomUsuari());
+        Personatge personatge4 = new Personatge("Jiraya",7,7,"Sabio","Viento",persona1.getNomUsuari());
+        Personatge personatge5 = new Personatge("Naruto",9,9,"Uzumaki","Viento",persona1.getNomUsuari());
+        Personatge personatge6 = new Personatge("Shikamaru",6,2,"Shika","Tierra",persona1.getNomUsuari());
        //Menu de la aplicacio
         totalPersonatges.add(personatge1);
         totalPersonatges.add(personatge2);
         totalPersonatges.add(personatge3);
         totalPersonatges.add(personatge4);
         totalPersonatges.add(personatge5);
-        totalPersonatges.add(personatge6);
+        totalPersonatges.add(personatge6);*/
         int opcio;
         Scanner entrada = new Scanner(System.in);
 
@@ -132,16 +202,16 @@ public class Principal {
                         break;
                     case 2:
                         //Falta Implementar
-                        modificarPersonatge();
+                        modificarPersonatge(persona1);
                         
                         break;
                     case 3:
                         //Falta Implementar
-                        eliminarPersonatge();
+                        eliminarPersonatge(persona1);
                         break;
                     case 4:
                         //Falta Implementar
-                        crearEquip();
+                        crearEquip(persona1);
                         break;
                     case 5:
                         //en aquesta opcio es tindra que realitzar una eleccio entre dos personatges P1 vs CPU
@@ -149,7 +219,7 @@ public class Principal {
                         break;
                     case 6:
                         //en aquest cas li tindrem que pasar les dos arraylist de equips
-                        combatEquip(persona1,personatge1,personatge2,personatge3,personatge4,personatge5,personatge6);
+                        combatEquip(persona1);
                         break;
                     case 7:
                         System.out.println("Sortint de l'aplicació...");
@@ -164,7 +234,8 @@ public class Principal {
 
     }
     
-    public static void crearPersonatge(Jugador persona1){
+    public static void crearPersonatge(Jugador persona1) throws SQLException{
+        PersonatgeDAO p =new PersonatgeDAO();
         Scanner entrada = new Scanner(System.in);
 
         System.out.println("Nom Personatge:");
@@ -182,19 +253,21 @@ public class Principal {
         System.out.println("Element:");
         String element = entrada.next();
      
-        Personatge personatge = new Personatge(nomPersonatge,ptAtac,ptDef,clan,element,persona1);
+        Personatge personatge = new Personatge(p.MaxNum()+1,nomPersonatge,ptAtac,ptDef,clan,element,persona1.getNomUsuari());
         totalPersonatges.add(personatge);
+        p.crearPersonatge(nomPersonatge,ptAtac,ptDef,clan,element,persona1.getNomUsuari());
         System.out.println(totalPersonatges.get(totalPersonatges.size()-1));
     }
     
-    public static void modificarPersonatge(){
+    public static void modificarPersonatge(Jugador persona1) throws SQLException{
+        PersonatgeDAO p =new PersonatgeDAO();
         Scanner entrada = new Scanner(System.in);
 
         for(int z=0;z<totalPersonatges.size();z++){
             
             System.out.println(totalPersonatges.get(z).getIdPersonatge()+"-"+totalPersonatges.get(z));
         }
-        System.out.println("NUm Personatge que volem modificar:");
+        System.out.println("Num Personatge que volem modificar:");
         int numPersonatge = entrada.nextInt();//campo por el que filtrar
        
         System.out.println("Nom Personatge:");
@@ -213,10 +286,12 @@ public class Principal {
         String element = entrada.next();
         //update ... values ... where idPersonaje = numPersonatge
         //vaciar el arraylist i hacer un select y volver-lo a llenar
-        System.out.println("Falta Implementar");
+        totalPersonatges=p.modificarPersonatge(nomPersonatge,ptAtac,ptDef,clan,element,numPersonatge,persona1.getNomUsuari());
+        //System.out.println("Falta Implementar");
     }
     
-    public static void eliminarPersonatge(){
+    public static void eliminarPersonatge(Jugador persona1) throws SQLException{
+        PersonatgeDAO p =new PersonatgeDAO();
         Scanner entrada = new Scanner(System.in);
          for(int z=0;z<totalPersonatges.size();z++){
             
@@ -225,25 +300,56 @@ public class Principal {
         System.out.println("Num Personatge que volem modificar:");
         int numPersonatge = entrada.nextInt();//delete from persontages where idperdonatge=numPersonatge
         //vaciar el arraylist i hacer un select y volver-lo a llenar
+        totalPersonatges=p.esborrarPersonatge(numPersonatge, persona1.getNomUsuari());
 
         System.out.println("Falta Implementar");
     }
     
-     public static void crearEquip(){
+     public static void crearEquip(Jugador persona1) throws SQLException{
+         EquipDAO e =new EquipDAO();
          ArrayList <Personatge> jugEquip  = new ArrayList<Personatge>();
+        int numPersonatge1=0;
+        int numPersonatge2=0;
+        int numPersonatge3=0;
+        //System.out.println(e.MaxNum());
         Scanner entrada = new Scanner(System.in);
         
         for(int z=0;z<totalPersonatges.size();z++){
             
-            System.out.println(z+"-"+totalPersonatges.get(z));
+            System.out.println(totalPersonatges.get(z).getIdPersonatge()+"-"+totalPersonatges.get(z));
         }
         for(int i=0;i<3;i++){
             System.out.println("Numero:");
             int numPersonatge = entrada.nextInt();
-            jugEquip.add(totalPersonatges.get(numPersonatge));
+            if(i==0){
+                for(int j=0;j<totalPersonatges.size();j++){
+                    if(totalPersonatges.get(j).getIdPersonatge()==numPersonatge){             
+                            jugEquip.add(totalPersonatges.get(j));
+                    }
+                }
+                numPersonatge1=numPersonatge;
+                
+            }else if(i==1){
+                for(int j=0;j<totalPersonatges.size();j++){
+                    if(totalPersonatges.get(j).getIdPersonatge()==numPersonatge){             
+                            jugEquip.add(totalPersonatges.get(j));
+                    }
+                }
+                numPersonatge2=numPersonatge;
+            }else if(i==2){
+                for(int j=0;j<totalPersonatges.size();j++){
+                    if(totalPersonatges.get(j).getIdPersonatge()==numPersonatge){             
+                            jugEquip.add(totalPersonatges.get(j));
+                    }
+                }
+                 numPersonatge3=numPersonatge;
+            }
+            
         }
-        Equip equip1 = new Equip(jugEquip);
+        
+        Equip equip1 = new Equip(e.MaxNum()+1,jugEquip);
         totalEquips.add(equip1);
+        e.crearEquip(numPersonatge1, numPersonatge2, numPersonatge3, persona1.getNomUsuari());
         //System.out.println("Falta Implementar");
         
     }
@@ -274,7 +380,7 @@ public class Principal {
     
     }
     
-    public static void combatEquip(Jugador persona1,Personatge personatge1,Personatge personatge2,Personatge personatge3,Personatge personatge4,Personatge personatge5,Personatge personatge6){
+    public static void combatEquip(Jugador persona1){
        Scanner entrada = new Scanner(System.in);
         for(int z=0;z<totalEquips.size();z++){
             

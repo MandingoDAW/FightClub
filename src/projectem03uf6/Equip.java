@@ -18,10 +18,10 @@ public class Equip {
     private int Potencial;
     private String caras;
 
-    public Equip(ArrayList<Personatge> Personatges) {
+    public Equip(int idEquip,ArrayList<Personatge> Personatges) {
         this.Personatges = Personatges;
         this.contador++;
-        this.idEquip=contador;
+        this.idEquip=idEquip;
         setPotencial();
     }
 
