@@ -8,8 +8,9 @@ package projectem03uf6;
 import java.util.ArrayList;
 
 /**
- *
- * @author usuario
+ * Classe CombatEquip
+ * Classe que s'encarrega de manegar la logica del combat en equip
+ * @author Erik
  */
 public class CombatEquip extends Combat {
     private Jugador P1;
@@ -22,6 +23,16 @@ public class CombatEquip extends Combat {
     private int RecompteG;
     private int RecompteP;
 
+    
+    
+    /**
+     * Constructor amb tots els paràmetres.
+     *
+     * @param P1
+     * @param Participant
+     * @param CPU
+     */
+    
     public CombatEquip(Jugador P1, ArrayList<Personatge> Participant, ArrayList<Personatge> CPU) {
         this.P1 = P1;
         this.Participant = Participant;
@@ -68,6 +79,10 @@ public class CombatEquip extends Combat {
     }
     
    
+    /**
+     * Metode terreny.
+     * Aquest metode s'encarregua de manegar la logica de benefici del terreny als membres del equip corresponents
+     */
     
     @Override
     public void terreny() {
@@ -79,7 +94,11 @@ public class CombatEquip extends Combat {
         
         }
     }
-
+    
+    /**
+     * Metode Resolucio.
+     * Aquest metode s'encarregua de mostrar el resultat de la logica del combat en equips
+     */
     @Override
     public void Resolucio() {
         System.out.println("***Combat En Equip***");

@@ -8,8 +8,8 @@ package projectem03uf6;
 import java.util.ArrayList;
 
 /**
- *
- * @author usuario
+ * Classe administrador
+ * @author Erik
  */
 public class Administrador extends Usuari{
     private String NomUsuari;

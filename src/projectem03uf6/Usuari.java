@@ -8,7 +8,7 @@ package projectem03uf6;
 import java.util.ArrayList;
 
 /**
- *
+ * Classe abstracta d'Usuari
  * @author Eric
  */
 public abstract class Usuari {

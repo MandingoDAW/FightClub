@@ -8,7 +8,7 @@ package projectem03uf6;
 import java.util.ArrayList;
 
 /**
- *
+ * Classe Equip
  * @author Eric
  */
 public class Equip {
@@ -18,6 +18,14 @@ public class Equip {
     private int Potencial;
     private String caras;
 
+    
+    /**
+     * Constructor amb tots els paràmetres.
+     *
+     * @param idEquip
+     * @param Personatges
+     */
+    
     public Equip(int idEquip,ArrayList<Personatge> Personatges) {
         this.Personatges = Personatges;
         this.contador++;

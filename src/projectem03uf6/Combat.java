@@ -6,8 +6,9 @@
 package projectem03uf6;
 
 /**
- *
- * @author usuario
+ * Classe abstracta Combat
+ * Implementa els metodes abstractes terreny i Resolucio.
+ * @author Erik
  */
 public abstract class Combat {
     

@@ -23,6 +23,19 @@ public class Personatge {
     private int valorEntero;
     private String propietari;
 
+    
+    /**
+     * Constructor amb tots els paràmetres.
+     *
+     * @param idPersonatge
+     * @param Nom
+     * @param potAtac
+     * @param potDef
+     * @param Raça
+     * @param Medi
+     * @param propietari
+     */
+    
     public Personatge(int idPersonatge,String Nom, int potAtac, int potDef, String Raça, String Medi,String propietari) {
         this.Nom = Nom;
         this.potAtac = potAtac;

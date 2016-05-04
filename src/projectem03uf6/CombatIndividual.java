@@ -8,7 +8,7 @@ package projectem03uf6;
 import java.util.ArrayList;
 
 /**
- *
+ * Classe CombatIndividual que hereta de Combat
  * @author Eric
  */
 public class CombatIndividual extends Combat {
@@ -24,6 +24,15 @@ public class CombatIndividual extends Combat {
     private String Terreny;
     private int valorEntero;
 
+    /**
+     * Constructor amb tots els paràmetres.
+     *
+     * @param P1
+     * @param Participant
+     * @param CPU
+     */
+    
+    
     public CombatIndividual(Jugador P1, Personatge Participant, Personatge CPU) {
         this.P1 = P1;
         this.CPU = CPU;
@@ -75,6 +84,12 @@ public class CombatIndividual extends Combat {
     public String toString() {
         return "Combat{" + "P1=" + P1 + ", CPU=" + CPU + ", Participant=" + Participant + ", Terreny=" + Terreny + '}';
     }
+    
+    /**
+     * Metode terreny.
+     * Aquest metode atribueix els beneficis del terreny al personatge
+     * 
+     */
     
     public void terreny(){
         switch(this.Participant.getHabEspecial()){
@@ -144,7 +159,10 @@ public class CombatIndividual extends Combat {
 
     }
     
-    
+    /**
+     * Metode Resolucio.
+     * Mostra el resultat del combat individual segons la logica de potAtac i potDef
+     */
     public void Resolucio(){
         //int d1;
         //int d2;

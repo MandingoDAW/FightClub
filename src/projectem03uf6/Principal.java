@@ -5,6 +5,8 @@
  */
 package projectem03uf6;
 
+import Dao.AdministradorDAO;
+import Dao.DAOFactory;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,8 +17,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- *
- * @author usuario
+ * Classe Principal.
+ * Classe on es prova el joc de proves del joc FIGH CLUB
+ * @author Erik
  */
 public class Principal {
     private static Connection conn;
@@ -30,6 +33,13 @@ public class Principal {
     private static int admin ;
     private static ArrayList <Personatge> totalPersonatges  = new ArrayList<Personatge>();
     private static ArrayList <Equip> totalEquips  = new ArrayList<Equip>();
+    
+    
+    
+    /**
+     * Main.
+     * Aqui preguntem el login del joc, si l'usuari es administrador o jugador.
+     */ 
     
     public static void main(String[] args) throws SQLException {
         Scanner entrada = new Scanner(System.in);
@@ -88,12 +98,14 @@ public class Principal {
     }
             //aplicacio();    //Métode que crida el joc de proves per a executar l'aplicació
             
-            
-       
-        
-        //combat2.Resolucio();
-   
-    public static void admin(){
+   //------------------------------------MODO ADMIN----------------------------//
+    
+    /**
+     * Metode admin.
+     * Aquest metode ens mostrarà el menú per administrar els usuaris.
+     */ 
+    public static void admin() throws SQLException{
+        AdministradorDAO dao = DAOFactory.crearAdministradorDAO();
         System.out.println("Informació del Admin");
         Jugador persona1 = new Jugador(nomU,passU,lema);
         System.out.println(persona1);
@@ -105,7 +117,7 @@ public class Principal {
             System.out.println("\nTrii quina operació vol realitzar:");
             System.out.println("1.Crear Usuari");
             System.out.println("2. Editar usuari");
-            System.out.println("3. LListar Usuari");          
+            System.out.println("3. Eliminar usuario");          
             System.out.println("4. Sortir");
 
                 opcio = entrada.nextInt();
@@ -116,30 +128,19 @@ public class Principal {
                         //llenamos info
                         //hacemos insert del objeto creado en BD
                         //añadimos al arraylist
-                        
+                        dao.registrar();
                         break;
                     case 2:
                         //Falta Implementar
                        // modificarPersonatge(persona1);
-                        
+                        modificarUsuario(dao);
                         break;
                     case 3:
                         //Falta Implementar
                         //eliminarPersonatge();
+                        eliminarUsuario(dao);
                         break;
                     case 4:
-                        //Falta Implementar
-                        //crearEquip();
-                        break;
-                    case 5:
-                        //en aquesta opcio es tindra que realitzar una eleccio entre dos personatges P1 vs CPU
-                        combatIndividual(persona1);
-                        break;
-                    case 6:
-                        //en aquest cas li tindrem que pasar les dos arraylist de equips
-                        //combatEquip(persona1,personatge1,personatge2,personatge3,personatge4,personatge5,personatge6);
-                        break;
-                    case 7:
                         System.out.println("Sortint de l'aplicació...");
                         //conn.close();
                         System.out.println("Final aplicació");
@@ -149,9 +150,89 @@ public class Principal {
                     break;
                 }
         } while (opcio != 4);
-    
+        
+        
     }
     
+    /**
+     * Metode modificarUsuario.
+     * Aquest metode utilitza el Factory de AdministrarDAO per poder editar l'usuari.
+     * 
+     * @param dao
+     */ 
+    public static void modificarUsuario(AdministradorDAO dao) throws SQLException{
+        System.out.println("Modificar usuario: ");
+        try{
+            String consultaSQL = "SELECT * FROM users";
+            PreparedStatement pstmt = conn.prepareStatement(consultaSQL,PreparedStatement.RETURN_GENERATED_KEYS);
+            ResultSet resultat = pstmt.executeQuery();
+
+            while (resultat.next()) {
+                int id = resultat.getInt(1);
+                String usuarioActual = resultat.getString(2);
+                String administrador = resultat.getString(4);
+                if(administrador.equals("1")){
+                    System.out.println("ID: "+id+" - usuario: "+usuarioActual+" - Administrador: Sí");
+                }else{
+                    System.out.println("ID: "+id+" - usuario: "+usuarioActual+" - Administrador: No");
+                }
+            }
+            resultat.close();
+            conn.commit();
+            int opcion;
+            Scanner entrada = new Scanner(System.in);
+            opcion = entrada.nextInt();
+            
+            dao.modificarUsuario(opcion);
+        } catch (InputMismatchException ex) {
+            System.out.println("Dades introduides incorrectament");
+        }
+    }
+    
+    /**
+     * Metode eliminarUsuario.
+     * Aquest metode utilitza el Factory de AdministrarDAO per poder esborrar l'usuari.
+     * 
+     * @param dao
+     */ 
+    public static void eliminarUsuario(AdministradorDAO dao) throws SQLException{
+        System.out.println("Eliminar usuario: ");
+        try{
+            String consultaSQL = "SELECT * FROM users";
+            PreparedStatement pstmt = conn.prepareStatement(consultaSQL,PreparedStatement.RETURN_GENERATED_KEYS);
+            ResultSet resultat = pstmt.executeQuery();
+
+            while (resultat.next()) {
+                int id = resultat.getInt(1);
+                String usuarioActual = resultat.getString(2);
+                String administrador = resultat.getString(4);
+                if(administrador.equals("1")){
+                    System.out.println("id-> "+id+" - usuari-> "+usuarioActual+" - admin: Sí");
+                }else{
+                    System.out.println("id-> "+id+" - usuari-> "+usuarioActual+" - admin: No");
+                }
+            }
+            resultat.close();
+            conn.commit();
+            int opcion;
+            Scanner entrada = new Scanner(System.in);
+            opcion = entrada.nextInt();
+            
+            dao.eliminarUsuario(opcion);
+        } catch (InputMismatchException ex) {
+            System.out.println("Dades introduides incorrectament");
+        }
+    }
+    
+    
+    //-----------------------------MODO USUARIO--------------------------------/
+    
+    
+    /**
+     * Metode aplicacio.
+     * Aquest metode ens mostra el menú per fer les operacions CRUD de l'usuari Jugador i poder jugar al joc per lluitar.
+     * 
+     */ 
     
     public static void aplicacio() throws SQLException{
   
@@ -233,7 +314,12 @@ public class Principal {
         } while (opcio != 7);
 
     }
-    
+    /**
+     * Metode crearPersonatge.
+     * Metode per crear el personatge amb els seus atributs corresponents.
+     * 
+     * @param persona1
+     */ 
     public static void crearPersonatge(Jugador persona1) throws SQLException{
         PersonatgeDAO p =new PersonatgeDAO();
         Scanner entrada = new Scanner(System.in);
@@ -259,6 +345,12 @@ public class Principal {
         System.out.println(totalPersonatges.get(totalPersonatges.size()-1));
     }
     
+    /**
+     * Metode modificarPersonatge.
+     * Aquest metode editar personatges ja creats a la BD.
+     * 
+     * @param persona1
+     */ 
     public static void modificarPersonatge(Jugador persona1) throws SQLException{
         PersonatgeDAO p =new PersonatgeDAO();
         Scanner entrada = new Scanner(System.in);
@@ -290,6 +382,12 @@ public class Principal {
         //System.out.println("Falta Implementar");
     }
     
+    /**
+     * Metode eliminarPersonatge.
+     * Aquest metode eliminar personatges ja creats a la BD.
+     * 
+     * @param persona1
+     */ 
     public static void eliminarPersonatge(Jugador persona1) throws SQLException{
         PersonatgeDAO p =new PersonatgeDAO();
         Scanner entrada = new Scanner(System.in);
@@ -304,6 +402,14 @@ public class Principal {
 
         System.out.println("Falta Implementar");
     }
+    
+    
+    /**
+     * Metode crearEquip.
+     * Aquest metode crea l'equip quant ja han sigut seleccionats previament els personatges.
+     * 
+     * @param persona1
+     */ 
     
      public static void crearEquip(Jugador persona1) throws SQLException{
          EquipDAO e =new EquipDAO();
@@ -357,7 +463,12 @@ public class Principal {
     
     
     
-    
+    /**
+     * Metode combatIndividual.
+     * Aquest metode implementa la lluita individual de personatges.
+     * 
+     * @param persona1
+     */ 
     public static void combatIndividual(Jugador persona1){
         Scanner entrada = new Scanner(System.in);
         for(int z=0;z<totalPersonatges.size();z++){
@@ -379,7 +490,12 @@ public class Principal {
         combat1.Resolucio();
     
     }
-    
+    /**
+     * Metode combatEquip.
+     * Aquest metode implementa la lluita entre 2 equips.
+     * 
+     * @param persona1
+     */ 
     public static void combatEquip(Jugador persona1){
        Scanner entrada = new Scanner(System.in);
         for(int z=0;z<totalEquips.size();z++){

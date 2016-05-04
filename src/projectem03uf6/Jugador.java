@@ -8,8 +8,8 @@ package projectem03uf6;
 import java.util.ArrayList;
 
 /**
- *
- * @author usuario
+ * Classe Jugador que hereta de Usuari
+ * @author Erik
  */
 public class Jugador extends Usuari {
  
@@ -19,6 +19,14 @@ public class Jugador extends Usuari {
     ArrayList <Personatge> nombreArrayList = new ArrayList<Personatge>();
     private String Lema;
 
+    /**
+     * Constructor amb tots els paràmetres.
+     *
+     * @param NomUsuari
+     * @param PasswordUsuari
+     * @param lema
+     */
+    
     public Jugador(String NomUsuari, String PasswordUsuari, String Lema) {
         this.NomUsuari = NomUsuari;
         this.PasswordUsuari = PasswordUsuari;

@@ -13,13 +13,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- *
+ * Classe EquipDAO 
+ * adminitra la persistencia de dades del joc de lluita en equip
  * @author usuario
  */
 public class EquipDAO {
     private BDAccessor bd = new BDAccessor();
         
-    
+    /**
+     * Metode MaxNum, amb el cual es determina el nombre de personatges per equip
+     *
+     */
         public int MaxNum() throws SQLException{
         int MaxNum=0;
          PreparedStatement pstmt = null;
@@ -48,7 +52,15 @@ public class EquipDAO {
     
     }
     
-        
+      /**
+     * Metode crearEquip.
+     * Aquest metode s'encarrega de crear l'equip una vegada están seleccionats el personatges
+     * 
+     * @param pt1
+     * @param pt2
+     * @param pt3
+     * @param nomUsuari
+     */  
       public void crearEquip(int pt1,int pt2,int pt3,String nomUsuari) throws SQLException{
        int id = 0;
        PreparedStatement pstmt = null;
@@ -99,6 +111,13 @@ public class EquipDAO {
    
    }
       
+      /**
+     * Metode llistarEquip.
+     * Aquest metode s'encarrega de llistar els equips que hi han disponibles
+     * 
+     * @param Nom
+     * @param Personatges
+     */ 
       public ArrayList<Equip> llistarEquip(String Nom,ArrayList<Personatge> Personatges) throws SQLException {
        PreparedStatement pstmt = null;
         ArrayList<Equip> llista = new ArrayList<>();

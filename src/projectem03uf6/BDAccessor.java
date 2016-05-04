@@ -9,8 +9,7 @@ import java.util.Properties;
  * Classe d'Utilitat per al manegament de la connexió a la Base de dades. Sempre connecta a un SGBD MySQL i en
  * conseqüència no fem servir la clau Driver del fixter de propietats
  *
- * @author sergi grau
- * @version 1.0, 05.02.2012
+ * @author Erik
  */
 public class BDAccessor {
 
